@@ -1,8 +1,7 @@
 [build]
-  command = "npm run build"
+  command = "npm run prisma:generate && npm run build"
   publish = ".next"
 
-[[redirects]]
-  from = "/*"
-  to = "/"
-  status = 200
+[plugins]
+  [[plugins]]
+    package = "@netlify/plugin-nextjs"
