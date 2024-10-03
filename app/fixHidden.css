@@ -1,0 +1,9 @@
+.fixHidden {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .fixHidden {
+        display: block;
+    }
+}
