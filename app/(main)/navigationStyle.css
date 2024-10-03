@@ -1,0 +1,19 @@
+/* Default styles for smaller devices */
+.sidebar {
+    display: none;
+    height: 100%;
+    width: 72px;
+    z-index: 30;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+}
+
+/* Styles for medium screens and above (min-width: 768px) */
+@media (min-width: 768px) {
+    .sidebar {
+        display: block;
+    }
+}
