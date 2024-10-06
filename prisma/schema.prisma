@@ -9,14 +9,14 @@ datasource db {
 }
 
 model Profile {
-  id String @id @default(uuid()) @map("_id")
-  userId String @unique
-  name String
+  id       String @id @default(uuid()) @map("_id")
+  userId   String @unique
+  name     String
   imageUrl String
-  email String
+  email    String
 
-  servers Server[]
-  members Member[]
+  servers  Server[]
+  members  Member[]
   channels Channel[]
 
   createdAt DateTime @default(now())
@@ -24,15 +24,15 @@ model Profile {
 }
 
 model Server {
-  id String @id @default(uuid()) @map("_id")
-  name String
-  imageUrl String
+  id         String @id @default(uuid()) @map("_id")
+  name       String
+  imageUrl   String
   inviteCode String @unique
 
   profileId String
-  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
-  members Member[]
+  members  Member[]
   channels Channel[]
 
   createdAt DateTime @default(now())
@@ -48,26 +48,26 @@ enum MemberRole {
 }
 
 model Member {
-  id String @id @default(uuid()) @map("_id")
+  id   String     @id @default(uuid()) @map("_id")
   role MemberRole @default(GUEST)
 
   profileId String
-  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
   serverId String
-  server Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+
+  messages       Message[]
+  directMessages DirectMessage[]
+
+  conversationsInitiated Conversation[] @relation("MemberOne")
+  conversationsReceived  Conversation[] @relation("MemberTwo")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([profileId])
   @@index([serverId])
-
-  messages Message[]
-  DirectMessage DirectMessage[]
-
-  conversationsInitiated Conversation[] @relation("MemberOne")
-  conversationsReceived Conversation[] @relation("MemberTwo")
 }
 
 enum ChannelType {
@@ -77,22 +77,23 @@ enum ChannelType {
 }
 
 model Channel {
-  id String @id @default(uuid()) @map("_id")
+  id   String      @id @default(uuid()) @map("_id")
   name String
   type ChannelType @default(TEXT)
 
   profileId String
-  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
   serverId String
-  server Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+
+  messages Message[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([profileId])
   @@index([serverId])
-  messages Message[]
 }
 
 model Message {
@@ -133,8 +134,8 @@ model Conversation {
 
 model DirectMessage {
   id      String  @id @default(uuid()) @map("_id")
-  content String
-  fileUrl String?
+  content String 
+  fileUrl String? 
 
   memberId String
   member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
