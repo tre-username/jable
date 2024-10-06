@@ -67,6 +67,7 @@ export const EditServerModal = () => {
 
             form.reset();
             router.refresh();
+            window.location.reload();
             onClose();
         } catch(error) {
             console.log(error);
@@ -76,6 +77,9 @@ export const EditServerModal = () => {
     const handleClose = () => {
         form.reset();
         onClose();
+        router.refresh();
+        router.push("/");
+        window.location.reload();
     }
 
     return (
