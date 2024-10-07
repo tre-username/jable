@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { PrismaClient } from "@prisma/client";
 
 export const getOrCreateConversation = async (
   memberOneId: string,
@@ -14,7 +15,7 @@ export const getOrCreateConversation = async (
 
   return conversation;
 };
-
+                         
 const findConversation = async (
   memberOneId: string,
   memberTwoId: string
@@ -33,7 +34,7 @@ const findConversation = async (
         }
       }
     });
-  } catch (error) {
+  } catch {
     return null;
   }
 };
@@ -46,18 +47,18 @@ const createNewConversation = async (
     return await db.conversation.create({
       data: {
         memberOneId,
-        memberTwoId
+        memberTwoId,
       },
       include: {
         memberOne: {
-          include: { profile: true }
+          include: { profile: true },
         },
         memberTwo: {
           include: { profile: true }
         }
       }
     });
-  } catch (error) {
+  } catch {
     return null;
   }
 };
