@@ -41,7 +41,7 @@ export async function DELETE(
             profile: true
           },
           orderBy: {
-            role: "asc"
+            role: "desc"
           }
         }
       }
@@ -96,7 +96,7 @@ export async function PATCH(
             profile: true
           },
           orderBy: {
-            role: "asc"
+            role: "desc"
           }
         }
       }
