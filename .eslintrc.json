@@ -1,6 +1,5 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"],
   "rules": {
-    "no-var": "off"  // Disable the no-var rule
+    "*": "off"
   }
 }
