@@ -1,5 +1,18 @@
 {
+  "extends": ["next/core-web-vitals", "next/typescript"],
   "rules": {
-    "*": "off"
+    "no-var": "off",
+    "no-unused-vars": "off",
+    "no-undef": "off",
+    "react/react-in-jsx-scope": "off",
+    "no-console": "off",
+    "import/no-unresolved": "off",
+    "import/order": "off",
+    "react/prop-types": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/display-name": "off",
+    "jsx-a11y/anchor-is-valid": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "off"
   }
 }
