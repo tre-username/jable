@@ -14,6 +14,24 @@ const nextConfig = {
       },
     ],
   },
+
+  experimental: {
+    serverActions: true,
+    serverComponents: true,
+  },
+
+  async rewrites() {
+    return [
+      {
+        source: "/api/messages",
+        destination: "/api/messages",
+      },
+      {
+        source: "/api/direct-messages",
+        destination: "/api/direct-messages",
+      },
+    ];
+  },
 };
 
 export default nextConfig;
