@@ -12,7 +12,8 @@ export default clerkMiddleware((auth, request) => {
   } catch (error) {
     // Log detailed error information including stack trace and source file
     console.error("Error caught in middleware:", error);
-    console.error("Error location: ", new Error().stack);  // Log stack trace
+    console.error("Error location: ", new Error().stack);
+    return undefined; 
   }
 })
 
