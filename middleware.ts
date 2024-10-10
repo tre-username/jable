@@ -3,18 +3,10 @@ import { clerkMiddleware, createRouteMatcher, authMiddleware } from '@clerk/next
 const isPublicRoute = createRouteMatcher(['/sign-in(.*)', '/sign-up(.*)', '/api/uploadthing'])
 
 export default clerkMiddleware((auth, request) => {
-  try {
-    if (!isPublicRoute(request)) {
-      auth().protect()
-    }
-    // Continue normally for public routes
-    publicRoutes: ["/api/uploadthing"]
-  } catch (error) {
-    // Log detailed error information including stack trace and source file
-    console.error("Error caught in middleware:", error);
-    console.error("Error location: ", new Error().stack);
-    return undefined; 
+  if (!isPublicRoute(request)) {
+    auth().protect()
   }
+  publicRoutes: ["/api/uploadthing"]
 })
 
 export const config = {
