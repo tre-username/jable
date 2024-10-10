@@ -59,11 +59,7 @@ export async function GET(req: Request) {
 
     return NextResponse.json({ items: messages, nextCursor });
   } catch (error) {
-    console.log("[MESSAGES_GET]", error);
+    console.error("[MESSAGES_GET]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
-
-// Make sure this route is dynamic, not static
-export const runtime = "nodejs";
-
