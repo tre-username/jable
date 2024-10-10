@@ -10,9 +10,9 @@ export default clerkMiddleware((auth, request) => {
     // Continue normally for public routes
     publicRoutes: ["/api/uploadthing"]
   } catch (error) {
-    console.error("Lambda error caught:", error);
-    // Simply return undefined or do nothing to ensure that the error is silently ignored
-    return undefined;
+    // Log detailed error information including stack trace and source file
+    console.error("Error caught in middleware:", error);
+    console.error("Error location: ", new Error().stack);  // Log stack trace
   }
 })
 
