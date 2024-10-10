@@ -11,11 +11,8 @@ export default clerkMiddleware((auth, request) => {
     publicRoutes: ["/api/uploadthing"]
   } catch (error) {
     console.error("Lambda error caught:", error);
-    // Return a dummy response to handle the error gracefully
-    return new Response(JSON.stringify({ message: 'An error occurred, but continuing...' }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' }
-    });
+    // Simply return undefined or do nothing to ensure that the error is silently ignored
+    return undefined;
   }
 })
 
