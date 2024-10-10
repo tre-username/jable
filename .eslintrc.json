@@ -9,39 +9,37 @@
   "plugins": [
     "react",
     "jsx-a11y",
-    "import"
+    "import",
+    "@typescript-eslint"
   ],
   "rules": {
     "no-var": "warn",
-    "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
-    "no-undef": "error",
-    "react/react-in-jsx-scope": "off",  // For Next.js, React is automatically in scope
-    "no-console": ["warn", { "allow": ["warn", "error"] }],
-    "import/no-unresolved": "error",
-    "import/order": [
-      "warn", 
-      {
-        "groups": [
-          ["builtin", "external"],
-          ["internal"],
-          ["parent", "sibling", "index"]
-        ],
-        "alphabetize": {
-          "order": "asc", 
-          "caseInsensitive": true
-        }
-      }
-    ],
-    "react/prop-types": "off",  // If using TypeScript, PropTypes are generally unnecessary
-    "react/jsx-props-no-spreading": "warn",  // Warn about spreading props
-    "react/display-name": "warn",  // Warn if displayName is missing
+    "no-unused-vars": "warn",
+    "no-undef": "warn",
+    "react/react-in-jsx-scope": "warn",
+    "no-console": "warn",
+    "import/no-unresolved": "warn",
+    "import/order": "warn",
+    "react/prop-types": "warn",
+    "react/jsx-props-no-spreading": "warn",
+    "react/display-name": "warn",
     "jsx-a11y/anchor-is-valid": "warn",
     "jsx-a11y/click-events-have-key-events": "warn",
-    "jsx-a11y/no-static-element-interactions": "warn"
+    "jsx-a11y/no-static-element-interactions": "warn",
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/no-unused-vars": "warn",
+    "no-unused-labels": "warn",
+    "@typescript-eslint/no-unused-expressions": "warn",
+    "no-mixed-spaces-and-tabs": "warn",
+    "@typescript-eslint/no-require-imports": "warn",
+    "react/no-unknown-property": "warn",
+    "@typescript-eslint/no-empty-object-type": "warn",
+    "no-extra-semi": "warn",
+    "jsx-a11y/no-noninteractive-element-interactions": "warn"
   },
   "settings": {
     "react": {
-      "version": "detect"  // Automatically detect the React version
+      "version": "detect"
     }
   },
   "env": {

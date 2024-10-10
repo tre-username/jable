@@ -2,11 +2,11 @@
 
 import { Loader2, ServerCrash } from "lucide-react";
 import { Member, Message, Profile } from "@prisma/client";
-import { ChatWelcome } from "./chat-welcome";
-import { useChatQuery } from "@/hooks/use-chat-query";
 import { Fragment, useRef, ElementRef, useEffect } from "react";
-import { ChatItem } from "./chat-item";
 import { format } from "date-fns";
+import { ChatWelcome } from "./chat-welcome";
+import { ChatItem } from "./chat-item";
+import { useChatQuery } from "@/hooks/use-chat-query";
 import { useChatSocket } from "@/hooks/use-chat-socket";
 import { useChatScroll } from "@/hooks/use-chat-scroll";
 

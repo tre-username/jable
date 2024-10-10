@@ -1,5 +1,9 @@
 "use client";
 
+import { Check, Copy, RefreshCw } from "lucide-react";
+import { useState } from "react";
+import axios from "axios";
+import { useRouter } from 'next/navigation';
 import {
     Dialog,
     DialogContent,
@@ -10,11 +14,7 @@ import { useModal } from "@/hooks/use-modal-store";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Check, Copy, RefreshCw } from "lucide-react";
 import { useOrigin } from "@/hooks/use-origin";
-import { useState } from "react";
-import axios from "axios";
-import { useRouter } from 'next/navigation';
 
 export const InviteModal = () => {
     const { onOpen, isOpen, onClose, type, data } = useModal();

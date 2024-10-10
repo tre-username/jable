@@ -1,5 +1,5 @@
-import { db } from "@/lib/db";
 import { PrismaClient } from "@prisma/client";
+import { db } from "@/lib/db";
 
 export const getOrCreateConversation = async (
   memberOneId: string,

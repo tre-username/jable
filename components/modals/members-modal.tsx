@@ -1,6 +1,11 @@
 "use client";
 
 import qs from "query-string";
+import { ShieldCheck, ShieldAlert, MoreVertical, ShieldQuestion, ShieldIcon, Check, Gavel, Loader2 } from "lucide-react";
+import { useState } from "react";
+import { MemberRole } from "@prisma/client";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 import {
     Dialog,
     DialogContent,
@@ -12,8 +17,6 @@ import { useModal } from "@/hooks/use-modal-store";
 import { ServerWithMembersWithProfiles } from "@/types";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { UserAvatar } from "@/components/user-avatar";
-import { ShieldCheck, ShieldAlert, MoreVertical, ShieldQuestion, ShieldIcon, Check, Gavel, Loader2 } from "lucide-react";
-import { useState } from "react";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -25,9 +28,6 @@ import {
     DropdownMenuTrigger,
     DropdownMenuSubTrigger
 } from "@/components/ui/dropdown-menu"
-import { MemberRole } from "@prisma/client";
-import axios from "axios";
-import { useRouter } from "next/navigation";
 
 const roleIconMap = {
     "GUEST": null,
