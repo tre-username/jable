@@ -9,8 +9,6 @@ export const runtime = "nodejs"; // Ensure dynamic handling
 
 export async function GET(req: NextRequest) {
   try {
-    // Getting cookies or headers directly from the NextRequest object
-    const cookies = req.cookies.get("your-cookie-name"); // Example of accessing cookies
     const profile = await currentProfile(); // Get current profile
     const { searchParams } = new URL(req.url);
 
