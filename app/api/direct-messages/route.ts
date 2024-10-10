@@ -6,7 +6,15 @@ import { db } from "@/lib/db";
 
 const MESSAGES_BATCH = 10;
 
-export async function GET(req: Request) {
+export async function GET(req: Request, res: any) {
+
+  res.setHeader('X-Frame-Options', 'DENY');
+    res.setHeader('X-XSS-Protection', '1; mode=block');
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('Referrer-Policy', 'no-referrer');
+    res.setHeader('Cache-Control', 'max-age=31536000, public');
+  
+    res.status(200).json({ message: 'Headers set' });
   try {
     const profile = await currentProfile();
     const { searchParams } = new URL(req.url);
