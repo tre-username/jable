@@ -15,11 +15,6 @@ const nextConfig = {
     ],
   },
 
-  experimental: {
-    serverActions: true,
-    serverComponents: true,
-  },
-
   async rewrites() {
     return [
       {
