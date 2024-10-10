@@ -1,12 +1,16 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { Message } from "@prisma/client";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 
 const MESSAGES_BATCH = 10;
 
-export async function GET(req: Request) {
+export const runtime = "nodejs"; // Ensure dynamic handling
+
+export async function GET(req: NextRequest) {
   try {
+    // Getting cookies or headers directly from the NextRequest object
+    const cookies = req.cookies.get("your-cookie-name"); // Example of accessing cookies
     const profile = await currentProfile(); // Get current profile
     const { searchParams } = new URL(req.url);
 
