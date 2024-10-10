@@ -65,6 +65,5 @@ export async function GET(req: Request) {
 }
 
 // Make sure this route is dynamic, not static
-export const config = {
-  runtime: "nodejs",  // Set runtime to Node.js for server-side rendering
-};
+export const runtime = "nodejs";
+
