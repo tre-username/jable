@@ -3,10 +3,20 @@ import { clerkMiddleware, createRouteMatcher, authMiddleware } from '@clerk/next
 const isPublicRoute = createRouteMatcher(['/sign-in(.*)', '/sign-up(.*)', '/api/uploadthing'])
 
 export default clerkMiddleware((auth, request) => {
-  if (!isPublicRoute(request)) {
-    auth().protect()
+  try {
+    if (!isPublicRoute(request)) {
+      auth().protect()
+    }
+    // Continue normally for public routes
+    publicRoutes: ["/api/uploadthing"]
+  } catch (error) {
+    console.error("Lambda error caught:", error);
+    // Return a dummy response to handle the error gracefully
+    return new Response(JSON.stringify({ message: 'An error occurred, but continuing...' }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
-  publicRoutes: ["/api/uploadthing"]
 })
 
 export const config = {
