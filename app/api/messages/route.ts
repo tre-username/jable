@@ -1,24 +1,20 @@
 import { NextResponse } from "next/server";
 import { Message } from "@prisma/client";
-
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 
 const MESSAGES_BATCH = 10;
 
 export async function GET(req: Request) {
-
   try {
-    const profile = await currentProfile();
+    const profile = await currentProfile(); // Get current profile
     const { searchParams } = new URL(req.url);
 
     const cursor = searchParams.get("cursor");
     const channelId = searchParams.get("channelId");
 
     if (!profile) return new NextResponse("Unauthorized", { status: 401 });
-
-    if (!channelId)
-      return new NextResponse("Channel ID Missing", { status: 400 });
+    if (!channelId) return new NextResponse("Channel ID Missing", { status: 400 });
 
     let messages: Message[] = [];
 
@@ -27,19 +23,19 @@ export async function GET(req: Request) {
         take: MESSAGES_BATCH,
         skip: 1,
         cursor: {
-          id: cursor
+          id: cursor,
         },
         where: {
-          channelId
+          channelId,
         },
         include: {
           member: {
             include: {
-              profile: true
-            }
-          }
+              profile: true,
+            },
+          },
         },
-        orderBy: { createdAt: "asc" }
+        orderBy: { createdAt: "asc" },
       });
     } else {
       messages = await db.message.findMany({
@@ -48,16 +44,15 @@ export async function GET(req: Request) {
         include: {
           member: {
             include: {
-              profile: true
-            }
-          }
+              profile: true,
+            },
+          },
         },
-        orderBy: { createdAt: "asc" }
+        orderBy: { createdAt: "asc" },
       });
     }
 
     let nextCursor = null;
-
     if (messages.length === MESSAGES_BATCH) {
       nextCursor = messages[MESSAGES_BATCH - 1].id;
     }
@@ -68,3 +63,8 @@ export async function GET(req: Request) {
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
+
+// Make sure this route is dynamic, not static
+export const config = {
+  runtime: "nodejs",  // Set runtime to Node.js for server-side rendering
+};
