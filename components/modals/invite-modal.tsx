@@ -32,9 +32,9 @@ export const InviteModal = () => {
     const onCopy = () => {
         navigator.clipboard.writeText(inviteUrl);
         setCopied(true);
-        setTimeout(() => {
+        // setTimeout(() => {
             setCopied(false);
-        }, 1000);
+        // }, 1000);
     };
 
     const onNew = async () => {

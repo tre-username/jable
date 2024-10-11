@@ -51,11 +51,11 @@ export const useChatScroll = ({
     };
 
     if (shouldAutoScroll()) {
-      setTimeout(() => {
+      // setTimeout(() => {
         bottomRef.current?.scrollIntoView({
           behavior: "smooth"
         });
-      }, 100);
+      // }, 100);
     }
   }, [bottomRef, chatRef, count, hasInitialized]);
 };
