@@ -90,9 +90,9 @@ export const MembersModal = () => {
             onClose();
             router.refresh();
             router.push("/");
-            // setInterval(function() {
+            setInterval(function() {
                 window.location.reload();
-            // }, 1500)
+            }, 1500)
         }
     };
 
