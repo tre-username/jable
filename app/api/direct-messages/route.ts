@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { DirectMessage } from "@prisma/client";
+
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 
@@ -7,14 +8,16 @@ const MESSAGES_BATCH = 10;
 
 export async function GET(req: Request) {
   try {
-    const profile = await currentProfile(); // Get current profile
+    const profile = await currentProfile();
     const { searchParams } = new URL(req.url);
 
     const cursor = searchParams.get("cursor");
     const conversationId = searchParams.get("conversationId");
 
     if (!profile) return new NextResponse("Unauthorized", { status: 401 });
-    if (!conversationId) return new NextResponse("Conversation ID Missing", { status: 400 });
+
+    if (!conversationId)
+      return new NextResponse("Conversation ID Missing", { status: 400 });
 
     let messages: DirectMessage[] = [];
 
@@ -23,19 +26,19 @@ export async function GET(req: Request) {
         take: MESSAGES_BATCH,
         skip: 1,
         cursor: {
-          id: cursor,
+          id: cursor
         },
         where: {
-          conversationId,
+          conversationId
         },
         include: {
           member: {
             include: {
-              profile: true,
-            },
-          },
+              profile: true
+            }
+          }
         },
-        orderBy: { createdAt: "asc" },
+        orderBy: { createdAt: "desc" }
       });
     } else {
       messages = await db.directMessage.findMany({
@@ -44,15 +47,16 @@ export async function GET(req: Request) {
         include: {
           member: {
             include: {
-              profile: true,
-            },
-          },
+              profile: true
+            }
+          }
         },
-        orderBy: { createdAt: "asc" },
+        orderBy: { createdAt: "desc" }
       });
     }
 
     let nextCursor = null;
+
     if (messages.length === MESSAGES_BATCH) {
       nextCursor = messages[MESSAGES_BATCH - 1].id;
     }

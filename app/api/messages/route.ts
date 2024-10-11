@@ -1,22 +1,23 @@
-import { NextResponse, NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import { Message } from "@prisma/client";
+
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 
 const MESSAGES_BATCH = 10;
 
-export const runtime = "nodejs"; // Ensure dynamic handling
-
-export async function GET(req: NextRequest) {
+export async function GET(req: Request) {
   try {
-    const profile = await currentProfile(); // Get current profile
+    const profile = await currentProfile();
     const { searchParams } = new URL(req.url);
 
     const cursor = searchParams.get("cursor");
     const channelId = searchParams.get("channelId");
 
     if (!profile) return new NextResponse("Unauthorized", { status: 401 });
-    if (!channelId) return new NextResponse("Channel ID Missing", { status: 400 });
+
+    if (!channelId)
+      return new NextResponse("Channel ID Missing", { status: 400 });
 
     let messages: Message[] = [];
 
@@ -25,19 +26,19 @@ export async function GET(req: NextRequest) {
         take: MESSAGES_BATCH,
         skip: 1,
         cursor: {
-          id: cursor,
+          id: cursor
         },
         where: {
-          channelId,
+          channelId
         },
         include: {
           member: {
             include: {
-              profile: true,
-            },
-          },
+              profile: true
+            }
+          }
         },
-        orderBy: { createdAt: "asc" },
+        orderBy: { createdAt: "desc" }
       });
     } else {
       messages = await db.message.findMany({
@@ -46,15 +47,16 @@ export async function GET(req: NextRequest) {
         include: {
           member: {
             include: {
-              profile: true,
-            },
-          },
+              profile: true
+            }
+          }
         },
-        orderBy: { createdAt: "asc" },
+        orderBy: { createdAt: "desc" }
       });
     }
 
     let nextCursor = null;
+
     if (messages.length === MESSAGES_BATCH) {
       nextCursor = messages[MESSAGES_BATCH - 1].id;
     }
