@@ -3,75 +3,13 @@ import { Message } from "@prisma/client";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 
-// const MESSAGES_BATCH = 10;
+const MESSAGES_BATCH = 10;
 
-// export const runtime = "nodejs"; // Ensure dynamic handling
-
-// export async function GET(req: NextRequest) {
-//   try {
-//     const profile = await currentProfile(); // Get current profile
-//     const { searchParams } = new URL(req.url);
-
-//     const cursor = searchParams.get("cursor");
-//     const channelId = searchParams.get("channelId");
-
-//     if (!profile) return new NextResponse("Unauthorized", { status: 401 });
-//     if (!channelId) return new NextResponse("Channel ID Missing", { status: 400 });
-
-//     let messages: Message[] = [];
-
-//     if (cursor) {
-//       messages = await db.message.findMany({
-//         take: MESSAGES_BATCH,
-//         skip: 1,
-//         cursor: {
-//           id: cursor,
-//         },
-//         where: {
-//           channelId,
-//         },
-//         include: {
-//           member: {
-//             include: {
-//               profile: true,
-//             },
-//           },
-//         },
-//         orderBy: { createdAt: "asc" },
-//       });
-//     } else {
-//       messages = await db.message.findMany({
-//         take: MESSAGES_BATCH,
-//         where: { channelId },
-//         include: {
-//           member: {
-//             include: {
-//               profile: true,
-//             },
-//           },
-//         },
-//         orderBy: { createdAt: "asc" },
-//       });
-//     }
-
-//     let nextCursor = null;
-//     if (messages.length === MESSAGES_BATCH) {
-//       nextCursor = messages[MESSAGES_BATCH - 1].id;
-//     }
-
-//     return NextResponse.json({ items: messages, nextCursor });
-//   } catch (error) {
-//     console.error("[MESSAGES_GET]", error);
-//     return new NextResponse("Internal Error", { status: 500 });
-//   }
-// }
-
-export const runtime = "nodejs"; // Confirming Node runtime for Netlify
-export const dynamic = "force-dynamic"; // Forces this route to be treated dynamically
+export const runtime = "nodejs"; // Ensure dynamic handling
 
 export async function GET(req: NextRequest) {
   try {
-    const profile = await currentProfile();
+    const profile = await currentProfile(); // Get current profile
     const { searchParams } = new URL(req.url);
 
     const cursor = searchParams.get("cursor");
@@ -80,23 +18,47 @@ export async function GET(req: NextRequest) {
     if (!profile) return new NextResponse("Unauthorized", { status: 401 });
     if (!channelId) return new NextResponse("Channel ID Missing", { status: 400 });
 
-    const messages = cursor
-      ? await db.message.findMany({
-          take: 10,
-          skip: 1,
-          cursor: { id: cursor },
-          where: { channelId },
-          include: { member: { include: { profile: true } } },
-          orderBy: { createdAt: "asc" },
-        })
-      : await db.message.findMany({
-          take: 10,
-          where: { channelId },
-          include: { member: { include: { profile: true } } },
-          orderBy: { createdAt: "asc" },
-        });
+    let messages: Message[] = [];
 
-    const nextCursor = messages.length === 10 ? messages[9].id : null;
+    if (cursor) {
+      messages = await db.message.findMany({
+        take: MESSAGES_BATCH,
+        skip: 1,
+        cursor: {
+          id: cursor,
+        },
+        where: {
+          channelId,
+        },
+        include: {
+          member: {
+            include: {
+              profile: true,
+            },
+          },
+        },
+        orderBy: { createdAt: "asc" },
+      });
+    } else {
+      messages = await db.message.findMany({
+        take: MESSAGES_BATCH,
+        where: { channelId },
+        include: {
+          member: {
+            include: {
+              profile: true,
+            },
+          },
+        },
+        orderBy: { createdAt: "asc" },
+      });
+    }
+
+    let nextCursor = null;
+    if (messages.length === MESSAGES_BATCH) {
+      nextCursor = messages[MESSAGES_BATCH - 1].id;
+    }
+
     return NextResponse.json({ items: messages, nextCursor });
   } catch (error) {
     console.error("[MESSAGES_GET]", error);
