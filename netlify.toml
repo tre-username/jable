@@ -2,6 +2,11 @@
   functions = "functions"  # Path to your functions directory
 
 [functions]
-  node_bundler = "esbuild"  # Optional: Specify the bundler if needed
+  # Specify external Node.js modules if needed
+  external_node_modules = [
+    "module-one",
+    "module-two"
+  ]
+
   # Set a custom timeout for functions
   timeout = 26  # Maximum timeout in seconds (up to 26)
