@@ -5,7 +5,7 @@ import { db } from "@/lib/db";
 
 const MESSAGES_BATCH = 10;
 
-export const runtime = "nodejs"; // Ensure dynamic handling
+export const dynamic = 'force-dynamic';
 
 export async function GET(req: NextRequest) {
   try {

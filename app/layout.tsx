@@ -9,6 +9,8 @@ import { ModalProvider } from "@/components/providers/modal-provider";
 import { SocketProvider } from "@/components/providers/socket-provider";
 import { QueryProvider } from '@/components/providers/query-provider';
 
+export const dynamic = 'force-dynamic';
+
 const font = Open_Sans({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
